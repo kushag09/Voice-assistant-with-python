@@ -5,6 +5,7 @@ import wikipedia #pip install wikipedia
 import webbrowser
 import os
 import smtplib
+import time 
 
 engine = pyttsx3.init('sapi5')
 voices = engine.getProperty('voices')
@@ -63,7 +64,8 @@ if __name__ == "__main__":
     while True:
     # if 1:
         query = takeCommand().lower()
-
+        
+    
         # Logic for executing tasks based on query
         if 'wikipedia' in query:
             speak('Searching Wikipedia...')
@@ -73,6 +75,9 @@ if __name__ == "__main__":
             print(results)
             speak(results)
 
+        elif query in ['hi', 'hello']:
+            speak('Hello sir, how can I help you?')
+            
         elif 'open youtube' in query:
             webbrowser.open("youtube.com")
 
@@ -106,4 +111,26 @@ if __name__ == "__main__":
                 speak("Email has been sent!")
             except Exception as e:
                 print(e)
-                speak("Sorry my friend harry bhai. I am not able to send this email")
+                speak("Sorry sir. I am not able to send this email")
+                
+        elif 'timer' in query or 'stopwatch' in query:
+            speak("For how many minutes?")
+            timer = takeCommand().lower()
+            timer = timer.replace('for', '')
+            timer = timer.replace('minutes', '')
+            timer = timer.replace('minute', '')
+            timer = timer.replace('in', '')
+
+            timer = float(timer)
+            timer = timer * 60
+            speak(f'I will remind you in {timer} seconds')
+
+            time.sleep(timer)
+            speak('Your time has been finished sir')
+            
+        elif 'bye' in query:
+            speak('Bye sir, have a great time')
+            break
+            
+        elif 'thanks' in query or 'thank you' in query:
+            speak('My pleasure sir')
